@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program 2 - CSS Animations and Transitions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-universal-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background: #fff;
+            color: #111;
+        }
+
+        header {
+            background: #111;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Pulse animation */
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            border: 2px solid #111;
+            padding: 25px;
+            width: 250px;
+            text-align: center;
+            animation: fadeIn 0.8s ease forwards;
+            opacity: 0;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+        }
+
+        .card:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: #f9f9f9;
+        }
+
+        .card h3 {
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .card .price {
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 20px;
+            border: 2px solid #111;
+            background: #111;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .btn:hover {
+            background: #fff;
+            color: #111;
+        }
+
+        /* Banner with pulse */
+        .banner {
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            background: #111;
+            color: #fff;
+            animation: pulse 2s infinite;
+        }
+
+        /* Spinning loader demo */
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #ddd;
+            border-top-color: #111;
+            border-radius: 50%;
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+
+        .loader-section p {
+            margin-top: 10px;
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Device Store</h1>
+        <p>CSS Animations &amp; Transitions Demo</p>
+    </header>
+
+    <main>
+        <h2>Featured Products</h2>
+        <div class="products">
+            <div class="card">
+                <h3>Canon EOS R6</h3>
+                <p>Full-frame mirrorless camera</p>
+                <p class="price">&#8377;1,85,000</p>
+                <button class="btn">Add to Cart</button>
+            </div>
+            <div class="card">
+                <h3>iPhone 15 Pro</h3>
+                <p>A17 Pro chip, 48MP camera</p>
+                <p class="price">&#8377;1,34,900</p>
+                <button class="btn">Add to Cart</button>
+            </div>
+            <div class="card">
+                <h3>Sony A7 III</h3>
+                <p>24.2MP full-frame camera</p>
+                <p class="price">&#8377;1,50,000</p>
+                <button class="btn">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="banner">
+            <h2>🔥 SALE: Up to 30% Off on All Cameras!</h2>
+        </div>
+
+        <div class="loader-section">
+            <div class="loader"></div>
+            <p>Loading more products...</p>
+        </div>
+    </main>
+
+
+</body>
+
+</html>

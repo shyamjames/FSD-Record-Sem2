@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program 9 - Real-Time Digital Clock</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-universal-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background: #fff;
+            color: #111;
+        }
+
+        header {
+            background: #111;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        main {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .clock-container {
+            border: 3px solid #111;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+
+        .clock-label {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .clock {
+            font-size: 3.5rem;
+            font-weight: bold;
+            letter-spacing: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .date {
+            font-size: 1rem;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        .ampm {
+            font-size: 1.5rem;
+            color: #888;
+        }
+
+        .store-hours {
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .store-hours h3 {
+            margin-bottom: 10px;
+        }
+
+        .store-hours table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .store-hours td {
+            padding: 6px 10px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .store-hours .status {
+            text-align: center;
+            padding: 10px;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .store-hours .open {
+            border: 2px solid #111;
+        }
+
+        .store-hours .closed {
+            border: 2px solid #999;
+            color: #999;
+        }
+
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 15px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Device Store</h1>
+        <p>Real-Time Digital Clock</p>
+    </header>
+
+    <main>
+        <div class="clock-container">
+            <div class="clock-label">Current Time</div>
+            <div class="clock" id="clock">00:00:00</div>
+            <div class="ampm" id="ampm">AM</div>
+            <div class="date" id="date"></div>
+        </div>
+
+        <div class="store-hours">
+            <h3>Store Hours</h3>
+            <table>
+                <tr>
+                    <td>Monday - Friday</td>
+                    <td>9:00 AM - 9:00 PM</td>
+                </tr>
+                <tr>
+                    <td>Saturday</td>
+                    <td>10:00 AM - 8:00 PM</td>
+                </tr>
+                <tr>
+                    <td>Sunday</td>
+                    <td>11:00 AM - 6:00 PM</td>
+                </tr>
+            </table>
+            <div class="status" id="storeStatus"></div>
+        </div>
+    </main>
+
+
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const mins = String(now.getMinutes()).padStart(2, '0');
+            const secs = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+
+            hours = hours % 12 || 12;
+            document.getElementById('clock').textContent = `${String(hours).padStart(2, '0')}:${mins}:${secs}`;
+            document.getElementById('ampm').textContent = ampm;
+
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('date').textContent = now.toLocaleDateString('en-IN', options);
+
+            // Check store status
+            const day = now.getDay(); // 0=Sun
+            const h24 = now.getHours();
+            let isOpen = false;
+            if (day >= 1 && day <= 5 && h24 >= 9 && h24 < 21) isOpen = true;
+            if (day === 6 && h24 >= 10 && h24 < 20) isOpen = true;
+            if (day === 0 && h24 >= 11 && h24 < 18) isOpen = true;
+
+            const statusEl = document.getElementById('storeStatus');
+            statusEl.textContent = isOpen ? '● Store is OPEN' : '● Store is CLOSED';
+            statusEl.className = 'status ' + (isOpen ? 'open' : 'closed');
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+
+</html>

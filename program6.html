@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program 6 - Registration Form Validation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-universal-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background: #fff;
+            color: #111;
+        }
+
+        header {
+            background: #111;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        main {
+            max-width: 450px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        form {
+            border: 1px solid #ccc;
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            font-size: 0.9rem;
+        }
+
+        .form-group input.error {
+            border-color: red;
+        }
+
+        .form-group .error-msg {
+            color: red;
+            font-size: 0.8rem;
+            margin-top: 3px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #111;
+            color: #fff;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        .success {
+            background: #f0f0f0;
+            border: 1px solid #111;
+            padding: 20px;
+            text-align: center;
+            display: none;
+            margin-top: 15px;
+        }
+
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 15px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Device Store</h1>
+        <p>Create Your Account</p>
+    </header>
+
+    <main>
+        <h2>Registration Form</h2>
+        <form id="regForm" novalidate>
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Enter your full name">
+                <div class="error-msg" id="nameError"></div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email">
+                <div class="error-msg" id="emailError"></div>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" placeholder="Enter 10-digit phone number">
+                <div class="error-msg" id="phoneError"></div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Min 6 characters">
+                <div class="error-msg" id="passwordError"></div>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Re-enter password">
+                <div class="error-msg" id="confirmPasswordError"></div>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        <div class="success" id="successMsg">
+            <h3>Registration Successful!</h3>
+            <p>Welcome to Device Store.</p>
+        </div>
+    </main>
+
+
+
+    <script>
+        document.getElementById('regForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            let valid = true;
+
+            // Clear previous errors
+            document.querySelectorAll('.error-msg').forEach(el => el.textContent = '');
+            document.querySelectorAll('input').forEach(el => el.classList.remove('error'));
+
+            // Name validation
+            const name = document.getElementById('name');
+            if (name.value.trim().length < 3) {
+                document.getElementById('nameError').textContent = 'Name must be at least 3 characters.';
+                name.classList.add('error');
+                valid = false;
+            }
+
+            // Email validation
+            const email = document.getElementById('email');
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email.value.trim())) {
+                document.getElementById('emailError').textContent = 'Enter a valid email address.';
+                email.classList.add('error');
+                valid = false;
+            }
+
+            // Phone validation
+            const phone = document.getElementById('phone');
+            const phonePattern = /^[0-9]{10}$/;
+            if (!phonePattern.test(phone.value.trim())) {
+                document.getElementById('phoneError').textContent = 'Enter a valid 10-digit phone number.';
+                phone.classList.add('error');
+                valid = false;
+            }
+
+            // Password validation
+            const password = document.getElementById('password');
+            if (password.value.length < 6) {
+                document.getElementById('passwordError').textContent = 'Password must be at least 6 characters.';
+                password.classList.add('error');
+                valid = false;
+            }
+
+            // Confirm password
+            const confirmPassword = document.getElementById('confirmPassword');
+            if (confirmPassword.value !== password.value) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match.';
+                confirmPassword.classList.add('error');
+                valid = false;
+            }
+
+            if (valid) {
+                document.getElementById('regForm').style.display = 'none';
+                document.getElementById('successMsg').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+
+</html>

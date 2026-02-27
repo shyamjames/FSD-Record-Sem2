@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program 16 - Bootstrap & Material Design UI</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB - Material Design for Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            --font-universal-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+
+        body {
+            font-family: var(--font-universal-sans) !important;
+            /* Override MDB default Roboto */
+            background-color: #fcfcfc;
+            color: #333;
+        }
+
+        /* Hero Image */
+        .bg-image-header {
+            background-image: url('https://mdbcdn.b-cdn.net/img/new/standard/technology/005.webp');
+            height: 400px;
+        }
+
+        .mask-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        /* Material card styling overrides */
+        .card {
+            border-radius: .5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        /* Customizing MDB input outlines */
+        .form-outline .form-control:focus~.form-notch .form-notch-middle {
+            border-color: #111;
+        }
+
+        .form-outline .form-control:focus~.form-notch .form-notch-leading {
+            border-top-color: #111;
+            border-bottom-color: #111;
+            border-left-color: #111;
+        }
+
+        .form-outline .form-control:focus~.form-notch .form-notch-trailing {
+            border-color: #111;
+        }
+
+        .form-outline .form-control:focus~.form-label {
+            color: #111;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-5-strong sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-desktop me-2"></i>Device Store
+            </a>
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <button type="button" class="btn btn-light btn-rounded" data-mdb-ripple-init>Sign In</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header id="home">
+        <div class="p-5 text-center bg-image bg-image-header shadow-1-strong">
+            <div class="mask mask-overlay">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <div class="text-white">
+                        <h1 class="mb-3 fw-bold display-4">Professional UI</h1>
+                        <h5 class="mb-4">Combining Bootstrap layouts with Material Design components</h5>
+                        <a class="btn btn-outline-light btn-lg btn-rounded" href="#products" role="button"
+                            data-mdb-ripple-init data-mdb-ripple-color="dark">
+                            Discover Products
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-5">
+
+        <!-- Products Section -->
+        <section id="products" class="section-padding">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Featured Electronics</h2>
+                <div class="col-md-6 mx-auto">
+                    <p class="text-muted">Explore our top-tier devices showcased using MDB Cards, featuring Material
+                        ripples, shadows, and clean Bootstrap grids.</p>
+                </div>
+            </div>
+
+            <!-- Bootstrap 5 Grid System -->
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+
+                <!-- Product Card 1 -->
+                <div class="col">
+                    <div class="card h-100 shadow-3">
+                        <div class="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
+                            <img src="https://www.notebookcheck.net/fileadmin/Notebooks/MSI/Titan_GT77_12UHS/4zu3_MSI_Titan_GT77_12UHS.jpg"
+                                class="img-fluid rounded-top" alt="Laptop" />
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Professional Laptop</h5>
+                            <p class="card-text">
+                                High-performance workstation built for demanding tasks and creative workflows. Includes
+                                a stunning 4K display.
+                            </p>
+                            <h5 class="fw-bold mb-3">&#8377;1,25,000</h5>
+                            <button type="button" class="btn btn-dark btn-rounded w-100" data-mdb-ripple-init>Add to
+                                Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="col">
+                    <div class="card h-100 shadow-3">
+                        <div class="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
+                            <img src="https://www.keychron.com/cdn/shop/articles/The_5_Best_Mechanical_Keyboards_of_2025_from_Keychron.jpg"
+                                class="img-fluid rounded-top" alt="Keyboard" />
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Mechanical Keyboard</h5>
+                            <p class="card-text">
+                                Tactile, responsive switches with customizable RGB lighting. Perfect for programmers and
+                                typists.
+                            </p>
+                            <h5 class="fw-bold mb-3">&#8377;8,500</h5>
+                            <button type="button" class="btn btn-dark btn-rounded w-100" data-mdb-ripple-init>Add to
+                                Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="col">
+                    <div class="card h-100 shadow-3">
+                        <div class="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
+                            <img src="https://i2.wp.com/cdnssl.ubergizmo.com/wp-content/uploads/2020/01/Samsung-Odyssey-G9.jpg"
+                                class="img-fluid rounded-top" alt="Setup" />
+                            <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Desk Monitors</h5>
+                            <p class="card-text">
+                                Ultra-wide monitors providing maximum screen real-estate. Designed with minimal bezels
+                                for dual setups.
+                            </p>
+                            <h5 class="fw-bold mb-3">&#8377;45,000</h5>
+                            <button type="button" class="btn btn-dark btn-rounded w-100" data-mdb-ripple-init>Add to
+                                Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Newsletter / Contact Section -->
+        <section id="contact" class="mb-5 bg-light p-5 rounded-5 shadow-3 text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <h3 class="fw-bold mb-4">Subscribe to our Newsletter</h3>
+                    <p class="text-muted mb-4">Stay updated with the latest tech news and exclusive offers. Experience
+                        MDB's advanced floating labels.</p>
+
+                    <form onsubmit="return false;">
+                        <!-- MDB Material Input -->
+                        <div data-mdb-input-init class="form-outline mb-4">
+                            <input type="email" id="form1Example1" class="form-control" />
+                            <label class="form-label" for="form1Example1">Email address</label>
+                        </div>
+
+                        <!-- MDB Material Input -->
+                        <div data-mdb-input-init class="form-outline mb-4">
+                            <input type="text" id="form1Example2" class="form-control" />
+                            <label class="form-label" for="form1Example2">Name</label>
+                        </div>
+
+                        <button data-mdb-ripple-init type="submit" class="btn btn-dark btn-block btn-rounded">Subscribe
+                            Now</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-center text-white">
+        <div class="container p-4 pb-0">
+            <!-- Social media icons -->
+            <section class="mb-4">
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button" data-mdb-ripple-init><i
+                        class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button" data-mdb-ripple-init><i
+                        class="fab fa-twitter"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button" data-mdb-ripple-init><i
+                        class="fab fa-google"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button" data-mdb-ripple-init><i
+                        class="fab fa-github"></i></a>
+            </section>
+        </div>
+
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2026 Copyright:
+            <a class="text-white fw-bold" href="#">Device Store</a>
+        </div>
+    </footer>
+
+    <!-- MDB - Material Design for Bootstrap JS -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.umd.min.js"></script>
+</body>
+
+</html>

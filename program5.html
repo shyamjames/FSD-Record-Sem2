@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program 5 - Multi-Section Landing Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-universal-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background: #fff;
+            color: #111;
+        }
+
+        /* Sticky Nav */
+        nav {
+            background: #111;
+            color: #fff;
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav .logo {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            padding: 60px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #111;
+            padding-bottom: 5px;
+        }
+
+        /* Hero */
+        .hero {
+            background: #111;
+            color: #fff;
+            text-align: center;
+            padding: 80px 20px;
+            max-width: 100%;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #ccc;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .hero button {
+            padding: 12px 30px;
+            background: #fff;
+            color: #111;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* Products */
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 280px;
+            text-align: center;
+        }
+
+        .card h3 {
+            margin-bottom: 5px;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .card .price {
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .testimonial {
+            border-left: 3px solid #111;
+            padding: 15px 20px;
+            background: #f9f9f9;
+            flex: 1 1 250px;
+            max-width: 300px;
+        }
+
+        .testimonial p {
+            font-style: italic;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .testimonial .author {
+            font-weight: bold;
+            margin-top: 8px;
+            font-style: normal;
+            font-size: 0.85rem;
+        }
+
+        /* Contact */
+        #contact form {
+            max-width: 400px;
+        }
+
+        #contact input,
+        #contact textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            font-size: 0.9rem;
+        }
+
+        #contact button {
+            padding: 10px 25px;
+            background: #111;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <span class="logo">Device Store</span>
+        <div>
+            <a href="#hero">Home</a>
+            <a href="#cameras">Cameras</a>
+            <a href="#phones">Phones</a>
+            <a href="#testimonials">Reviews</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <div class="hero" id="hero">
+        <h1>Welcome to Device Store</h1>
+        <p>Best deals on cameras &amp; phones, all in one place.</p>
+        <button>Shop Now</button>
+    </div>
+
+    <section id="cameras">
+        <h2>Cameras</h2>
+        <div class="products">
+            <div class="card">
+                <h3>Canon EOS R6</h3>
+                <p>Full-frame mirrorless</p>
+                <p class="price">&#8377;1,85,000</p>
+            </div>
+            <div class="card">
+                <h3>Sony A7 III</h3>
+                <p>24.2MP full-frame</p>
+                <p class="price">&#8377;1,50,000</p>
+            </div>
+            <div class="card">
+                <h3>Nikon Z50</h3>
+                <p>Compact DX mirrorless</p>
+                <p class="price">&#8377;85,000</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="phones">
+        <h2>Phones</h2>
+        <div class="products">
+            <div class="card">
+                <h3>iPhone 15 Pro</h3>
+                <p>A17 Pro, 48MP camera</p>
+                <p class="price">&#8377;1,34,900</p>
+            </div>
+            <div class="card">
+                <h3>Galaxy S24</h3>
+                <p>200MP AI camera</p>
+                <p class="price">&#8377;79,999</p>
+            </div>
+            <div class="card">
+                <h3>Pixel 8</h3>
+                <p>Computational photography</p>
+                <p class="price">&#8377;75,999</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials">
+        <h2>Customer Reviews</h2>
+        <div class="testimonials">
+            <div class="testimonial">
+                <p>"Great prices and fast delivery. My Canon arrived in 2 days!"</p>
+                <div class="author">- Rahul S.</div>
+            </div>
+            <div class="testimonial">
+                <p>"Genuine products with warranty. Highly recommended."</p>
+                <div class="author">- Priya M.</div>
+            </div>
+            <div class="testimonial">
+                <p>"Best place to buy phones online. Easy returns too."</p>
+                <div class="author">- Arjun K.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <form onsubmit="return false;">
+            <input type="text" placeholder="Your Name">
+            <input type="email" placeholder="Your Email">
+            <textarea rows="4" placeholder="Your Message"></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+
+</body>
+
+</html>

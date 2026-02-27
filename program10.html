@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program 10 - Dropdown-Based Content Rendering</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-universal-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background: #fff;
+            color: #111;
+        }
+
+        header {
+            background: #111;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        main {
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .dropdown-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .dropdown-section label {
+            font-weight: bold;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+
+        .dropdown-section select {
+            padding: 10px 15px;
+            border: 2px solid #111;
+            font-size: 1rem;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .content-area {
+            border: 1px solid #ccc;
+            padding: 25px;
+            min-height: 200px;
+        }
+
+        .content-area h3 {
+            margin-bottom: 10px;
+        }
+
+        .content-area p {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .content-area .specs {
+            margin-top: 15px;
+        }
+
+        .content-area .specs table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .content-area .specs td {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        .content-area .specs td:first-child {
+            font-weight: bold;
+            width: 40%;
+        }
+
+        .content-area .price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .placeholder {
+            text-align: center;
+            color: #999;
+            padding: 40px;
+        }
+
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 15px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Device Store</h1>
+        <p>Dropdown-Based Content Rendering</p>
+    </header>
+
+    <main>
+        <h2>Select a Product</h2>
+        <div class="dropdown-section">
+            <label for="productSelect">Product:</label>
+            <select id="productSelect">
+                <option value="">-- Choose a product --</option>
+                <option value="canon">Canon EOS R6</option>
+                <option value="sony">Sony A7 III</option>
+                <option value="iphone">iPhone 15 Pro</option>
+                <option value="samsung">Samsung Galaxy S24</option>
+                <option value="pixel">Google Pixel 8</option>
+            </select>
+        </div>
+
+        <div class="content-area" id="contentArea">
+            <div class="placeholder">Select a product from the dropdown to see details.</div>
+        </div>
+    </main>
+
+
+
+    <script>
+        const productData = {
+            canon: {
+                name: "Canon EOS R6",
+                desc: "The Canon EOS R6 is a full-frame mirrorless camera designed for both photo and video creators.",
+                price: "₹1,85,000",
+                specs: { "Sensor": "20.1MP Full-Frame CMOS", "ISO Range": "100 - 102400", "Video": "4K 60fps", "Autofocus": "Dual Pixel CMOS AF II", "Weight": "680g" }
+            },
+            sony: {
+                name: "Sony A7 III",
+                desc: "The Sony A7 III offers excellent image quality with a 24.2MP full-frame sensor and advanced autofocus.",
+                price: "₹1,50,000",
+                specs: { "Sensor": "24.2MP Full-Frame Exmor R", "ISO Range": "100 - 51200", "Video": "4K 30fps", "Autofocus": "693-point AF", "Weight": "650g" }
+            },
+            iphone: {
+                name: "iPhone 15 Pro",
+                desc: "The iPhone 15 Pro features the A17 Pro chip and a pro-grade 48MP camera system.",
+                price: "₹1,34,900",
+                specs: { "Chip": "A17 Pro", "Display": "6.1\" Super Retina XDR", "Camera": "48MP Main + 12MP Ultra Wide", "Storage": "128GB / 256GB / 512GB / 1TB", "Battery": "Up to 23 hrs video" }
+            },
+            samsung: {
+                name: "Samsung Galaxy S24",
+                desc: "Samsung Galaxy S24 brings AI-powered features and an incredible 200MP camera system.",
+                price: "₹79,999",
+                specs: { "Chip": "Snapdragon 8 Gen 3", "Display": "6.2\" Dynamic AMOLED 2X", "Camera": "200MP Main", "Storage": "128GB / 256GB", "Battery": "4000 mAh" }
+            },
+            pixel: {
+                name: "Google Pixel 8",
+                desc: "Google Pixel 8 offers the best computational photography experience powered by Google Tensor G3.",
+                price: "₹75,999",
+                specs: { "Chip": "Google Tensor G3", "Display": "6.2\" OLED 120Hz", "Camera": "50MP Main + 12MP Ultra Wide", "Storage": "128GB / 256GB", "Battery": "4575 mAh" }
+            }
+        };
+
+        document.getElementById('productSelect').addEventListener('change', function () {
+            const area = document.getElementById('contentArea');
+            const key = this.value;
+
+            if (!key) {
+                area.innerHTML = '<div class="placeholder">Select a product from the dropdown to see details.</div>';
+                return;
+            }
+
+            const p = productData[key];
+            let specsHTML = Object.entries(p.specs).map(([k, v]) =>
+                `<tr><td>${k}</td><td>${v}</td></tr>`
+            ).join('');
+
+            area.innerHTML = `
+                <h3>${p.name}</h3>
+                <p>${p.desc}</p>
+                <div class="specs"><table>${specsHTML}</table></div>
+                <div class="price">${p.price}</div>
+            `;
+        });
+    </script>
+</body>
+
+</html>

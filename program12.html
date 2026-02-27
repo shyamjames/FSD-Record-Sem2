@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program 12 - Weather App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-universal-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background: #fff;
+            color: #111;
+        }
+
+        header {
+            background: #111;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        main {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #111;
+            font-size: 1rem;
+        }
+
+        .search-box button {
+            padding: 12px 25px;
+            background: #111;
+            color: #fff;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background: #333;
+        }
+
+        .error-msg {
+            text-align: center;
+            color: red;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            color: #888;
+            padding: 30px;
+            font-size: 1rem;
+            display: none;
+        }
+
+        .weather-card {
+            border: 2px solid #111;
+            padding: 30px;
+            display: none;
+        }
+
+        .weather-card .city-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .weather-card .condition {
+            text-align: center;
+            color: #555;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .weather-card .temp {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .details {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+
+        .detail-item {
+            text-align: center;
+            flex: 1 1 100px;
+        }
+
+        .detail-item .label {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .detail-item .value {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 15px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Weather App</h1>
+        <p>Fetch API &amp; JSON</p>
+    </header>
+
+    <main>
+        <h2>Check Weather</h2>
+        <div class="search-box">
+            <input type="text" id="cityInput" placeholder="Enter city name (e.g. Mumbai)">
+            <button onclick="getWeather()">Search</button>
+        </div>
+
+        <div class="error-msg" id="errorMsg"></div>
+        <div class="loading" id="loading">Fetching weather data...</div>
+
+        <div class="weather-card" id="weatherCard">
+            <div class="city-name" id="cityName"></div>
+            <div class="condition" id="condition"></div>
+            <div class="temp" id="temperature"></div>
+            <div class="details">
+                <div class="detail-item">
+                    <div class="label">Humidity</div>
+                    <div class="value" id="humidity"></div>
+                </div>
+                <div class="detail-item">
+                    <div class="label">Wind Speed</div>
+                    <div class="value" id="wind"></div>
+                </div>
+                <div class="detail-item">
+                    <div class="label">Feels Like</div>
+                    <div class="value" id="feelsLike"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <script>
+        // Allow pressing Enter to search
+        document.getElementById('cityInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') getWeather();
+        });
+
+        // WMO Weather codes to human-readable conditions
+        function getWeatherCondition(code) {
+            const conditions = {
+                0: "Clear Sky", 1: "Mainly Clear", 2: "Partly Cloudy", 3: "Overcast",
+                45: "Foggy", 48: "Depositing Rime Fog",
+                51: "Light Drizzle", 53: "Moderate Drizzle", 55: "Dense Drizzle",
+                61: "Slight Rain", 63: "Moderate Rain", 65: "Heavy Rain",
+                71: "Slight Snowfall", 73: "Moderate Snowfall", 75: "Heavy Snowfall",
+                80: "Slight Rain Showers", 81: "Moderate Rain Showers", 82: "Violent Rain Showers",
+                95: "Thunderstorm", 96: "Thunderstorm with Hail", 99: "Thunderstorm with Heavy Hail"
+            };
+            return conditions[code] || "Unknown";
+        }
+
+        async function getWeather() {
+            const city = document.getElementById('cityInput').value.trim();
+            const errorEl = document.getElementById('errorMsg');
+            const loadingEl = document.getElementById('loading');
+            const cardEl = document.getElementById('weatherCard');
+
+            // Reset UI
+            errorEl.style.display = 'none';
+            cardEl.style.display = 'none';
+
+            if (!city) {
+                errorEl.textContent = 'Please enter a city name.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            loadingEl.style.display = 'block';
+
+            try {
+                // Step 1: Geocode the city name using Open-Meteo Geocoding API
+                const geoRes = await fetch(
+                    `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`
+                );
+                const geoData = await geoRes.json();
+
+                if (!geoData.results || geoData.results.length === 0) {
+                    throw new Error('City not found. Please check the name and try again.');
+                }
+
+                const { latitude, longitude, name, country } = geoData.results[0];
+
+                // Step 2: Fetch weather data using Open-Meteo Weather API (no API key needed)
+                const weatherRes = await fetch(
+                    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m`
+                );
+                const weatherData = await weatherRes.json();
+                const current = weatherData.current;
+
+                // Step 3: Display the processed JSON data
+                document.getElementById('cityName').textContent = `${name}, ${country}`;
+                document.getElementById('condition').textContent = getWeatherCondition(current.weather_code);
+                document.getElementById('temperature').textContent = `${current.temperature_2m}°C`;
+                document.getElementById('humidity').textContent = `${current.relative_humidity_2m}%`;
+                document.getElementById('wind').textContent = `${current.wind_speed_10m} km/h`;
+                document.getElementById('feelsLike').textContent = `${current.apparent_temperature}°C`;
+
+                cardEl.style.display = 'block';
+
+            } catch (err) {
+                errorEl.textContent = err.message;
+                errorEl.style.display = 'block';
+            } finally {
+                loadingEl.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

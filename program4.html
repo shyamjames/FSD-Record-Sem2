@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program 4 - Pricing Table Layout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-universal-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background: #fff;
+            color: #111;
+        }
+
+        header {
+            background: #111;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .pricing-table {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .plan {
+            border: 2px solid #ccc;
+            padding: 30px 25px;
+            width: 280px;
+            text-align: center;
+            position: relative;
+        }
+
+        .plan.popular {
+            border-color: #111;
+        }
+
+        .plan.popular .badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            padding: 4px 15px;
+            font-size: 0.75rem;
+        }
+
+        .plan h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .plan .price {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .plan .period {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .plan ul {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .plan ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        .plan ul li:last-child {
+            border-bottom: none;
+        }
+
+        .plan button {
+            padding: 10px 30px;
+            border: 2px solid #111;
+            background: #fff;
+            color: #111;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .plan button:hover {
+            background: #111;
+            color: #fff;
+        }
+
+        .plan.popular button {
+            background: #111;
+            color: #fff;
+        }
+
+        .plan.popular button:hover {
+            background: #333;
+        }
+
+        footer {
+            background: #111;
+            color: #aaa;
+            text-align: center;
+            padding: 15px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Device Store</h1>
+        <p>Protection Plans for Your Devices</p>
+    </header>
+
+    <main>
+        <h2>Choose Your Protection Plan</h2>
+        <div class="pricing-table">
+            <div class="plan">
+                <h3>Basic</h3>
+                <div class="price">&#8377;999</div>
+                <div class="period">per year</div>
+                <ul>
+                    <li>1 Device Covered</li>
+                    <li>Accidental Damage</li>
+                    <li>Email Support</li>
+                    <li style="color:#ccc;">No Theft Coverage</li>
+                    <li style="color:#ccc;">No Priority Repair</li>
+                </ul>
+                <button>Select Basic</button>
+            </div>
+
+            <div class="plan popular">
+                <span class="badge">MOST POPULAR</span>
+                <h3>Standard</h3>
+                <div class="price">&#8377;1,999</div>
+                <div class="period">per year</div>
+                <ul>
+                    <li>3 Devices Covered</li>
+                    <li>Accidental Damage</li>
+                    <li>Theft Coverage</li>
+                    <li>Phone Support</li>
+                    <li style="color:#ccc;">No Priority Repair</li>
+                </ul>
+                <button>Select Standard</button>
+            </div>
+
+            <div class="plan">
+                <h3>Premium</h3>
+                <div class="price">&#8377;3,999</div>
+                <div class="period">per year</div>
+                <ul>
+                    <li>Unlimited Devices</li>
+                    <li>Accidental Damage</li>
+                    <li>Theft Coverage</li>
+                    <li>24/7 Priority Support</li>
+                    <li>Priority Repair</li>
+                </ul>
+                <button>Select Premium</button>
+            </div>
+        </div>
+    </main>
+
+
+</body>
+
+</html>
