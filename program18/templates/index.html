@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program 18 - Grid Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-universal-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background: #fff;
+            color: #111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background: #111;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+        }
+
+        header p {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 100px);
+            padding: 20px;
+        }
+
+        .calculator {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        .calculator h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            border-bottom: 2px solid #111;
+            padding-bottom: 5px;
+        }
+
+        .display-container {
+            width: 100%;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .history {
+            font-size: 14px;
+            color: #666;
+            min-height: 20px;
+        }
+
+        .display {
+            font-size: 28px;
+            word-wrap: break-word;
+            max-width: 100%;
+        }
+
+        .error {
+            color: red;
+            font-size: 20px;
+        }
+
+        /* Hide the actual form inputs that hold state */
+        .hidden-inputs {
+            display: none;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 20px 15px;
+            font-size: 1.2rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #eee;
+        }
+
+        .operator {
+            background-color: #f0f0f0;
+            color: #111;
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+
+        .operator:hover {
+            background-color: #e0e0e0;
+        }
+
+        .clear {
+            grid-column: span 2;
+            background-color: #dc3545;
+            color: white;
+            border-color: #c82333;
+        }
+
+        .clear:hover {
+            background-color: #b02a37;
+        }
+
+        .equals {
+            grid-column: span 2;
+            background-color: #111;
+            color: white;
+            border-color: #000;
+        }
+
+        .equals:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Grid Calculator</h1>
+        <p>Program 18 - Built with Flask and standard form submission</p>
+    </header>
+
+    <main>
+        <div class="calculator">
+
+            <div class="display-container">
+                <div class="history">
+                    {% if previous_value and operator_value %}
+                    {{ previous_value }}
+                    {% if operator_value == 'add' %} +
+                    {% elif operator_value == 'subtract' %} -
+                    {% elif operator_value == 'multiply' %} &times;
+                    {% elif operator_value == 'divide' %} &divide;
+                    {% endif %}
+                    {% endif %}
+                </div>
+                <div class="display {% if display == 'Error' %}error{% endif %}">
+                    {{ display if display else '0' }}
+                </div>
+            </div>
+
+            <form method="POST" action="/" id="calcForm">
+                <div class="hidden-inputs">
+                    <input type="hidden" name="action" id="action" value="">
+                    <input type="hidden" name="display_value" value="{{ display if display else '0' }}">
+                    <input type="hidden" name="previous_value" value="{{ previous_value if previous_value else '' }}">
+                    <input type="hidden" name="operator_value" value="{{ operator_value if operator_value else '' }}">
+                </div>
+
+                <div class="grid">
+                    <button type="submit" class="clear" onclick="document.getElementById('action').value='C'">C</button>
+                    <button type="submit" class="operator"
+                        onclick="document.getElementById('action').value='divide'">&divide;</button>
+                    <button type="submit" class="operator"
+                        onclick="document.getElementById('action').value='multiply'">&times;</button>
+
+                    <button type="submit" onclick="document.getElementById('action').value='7'">7</button>
+                    <button type="submit" onclick="document.getElementById('action').value='8'">8</button>
+                    <button type="submit" onclick="document.getElementById('action').value='9'">9</button>
+                    <button type="submit" class="operator"
+                        onclick="document.getElementById('action').value='subtract'">-</button>
+
+                    <button type="submit" onclick="document.getElementById('action').value='4'">4</button>
+                    <button type="submit" onclick="document.getElementById('action').value='5'">5</button>
+                    <button type="submit" onclick="document.getElementById('action').value='6'">6</button>
+                    <button type="submit" class="operator"
+                        onclick="document.getElementById('action').value='add'">+</button>
+
+                    <button type="submit" onclick="document.getElementById('action').value='1'">1</button>
+                    <button type="submit" onclick="document.getElementById('action').value='2'">2</button>
+                    <button type="submit" onclick="document.getElementById('action').value='3'">3</button>
+
+
+                    <button type="submit" onclick="document.getElementById('action').value='0'">0</button>
+                    <button type="submit" onclick="document.getElementById('action').value='.'">.</button>
+                    <!-- Equals uses JS to format for safety and ease -->
+                    <button type="submit" class="equals"
+                        onclick="document.getElementById('action').value='equals'">=</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+</body>
+
+</html>
