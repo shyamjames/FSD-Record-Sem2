@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Student Manager{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #111;
+            --header-bg: #111;
+            --header-text: #fff;
+            --card-bg: #fff;
+            --border-color: #ddd;
+            --btn-bg: #111;
+            --btn-hover: #333;
+            --btn-text: #fff;
+            --link-color: #0066cc;
+        }
+
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --header-bg: #000;
+            --header-text: #fff;
+            --card-bg: #2d2d2d;
+            --border-color: #444;
+            --btn-bg: #f0f0f0;
+            --btn-hover: #ccc;
+            --btn-text: #111;
+            --link-color: #66b3ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: var(--header-text);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        nav a,
+        nav form button {
+            color: var(--header-text);
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 1rem;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        nav form {
+            display: inline;
+        }
+
+        .theme-toggle {
+            background-color: transparent;
+            border: 1px solid var(--header-text);
+            color: var(--header-text);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .btn:hover {
+            background-color: var(--btn-hover);
+            color: var(--btn-text) !important;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0 1rem 0;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        a {
+            color: var(--link-color);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div>
+            <a href="{% url 'home' %}">Student Manager</a>
+        </div>
+        <nav>
+            <button class="theme-toggle" onclick="toggleTheme()">☀️ / 🌙</button>
+            {% if user.is_authenticated %}
+            <a href="{% url 'student_list' %}">Students</a>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+            {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        }
+
+        // Apply theme on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            // Check system preference if no saved theme
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.body.classList.add('dark-mode');
+            }
+        });
+    </script>
+</body>
+
+</html>

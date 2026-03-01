@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Student Manager{% endblock %}
+
+{% block content %}
+<div class="card" style="text-align: center; margin-top: 40px;">
+    <h1>Welcome to the Django Student Management System</h1>
+    <p>This project fulfills requirements 20-28.</p>
+
+    <div style="margin-top: 20px;">
+        {% if user.is_authenticated %}
+        <a href="{% url 'student_list' %}" class="btn">View Students</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn">Login to Continue</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

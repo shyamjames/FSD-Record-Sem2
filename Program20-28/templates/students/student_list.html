@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Students List{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>Students</h2>
+        <a href="{% url 'student_create' %}" class="btn">Add Student</a>
+    </div>
+
+    {% if students %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Course</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.name }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.course }}</td>
+                <td>
+                    <a href="{% url 'student_detail' student.pk %}" class="btn"
+                        style="padding: 0.3rem 0.5rem; font-size: 0.9rem;">View</a>
+                    <a href="{% url 'student_update' student.pk %}" class="btn"
+                        style="padding: 0.3rem 0.5rem; font-size: 0.9rem;">Edit</a>
+                    <a href="{% url 'student_delete' student.pk %}" class="btn btn-danger"
+                        style="padding: 0.3rem 0.5rem; font-size: 0.9rem;">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="margin-top: 20px;">No students found. Add one above!</p>
+    {% endif %}
+</div>
+{% endblock %}
