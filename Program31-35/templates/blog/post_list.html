@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog - Program 34{% endblock %}
+
+{% block content %}
+<div class="row mb-4 mt-4 align-items-center">
+    <div class="col-md-8">
+        <h2>Latest Blog Posts</h2>
+        <p class="text-muted">A minimal blog platform.</p>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="{% url 'post_create' %}" class="btn btn-primary shadow-sm">+ Write a Post</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        {% for post in posts %}
+        <div class="card shadow-sm mb-4 border-0">
+            <div class="card-body">
+                <h3 class="card-title">
+                    <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark">{{ post.title
+                        }}</a>
+                </h3>
+                <div class="text-muted small mb-3">
+                    By <strong>{{ post.author.username }}</strong> on {{ post.created_date|date:"F d, Y" }}
+                </div>
+                <p class="card-text text-secondary">{{ post.content|truncatewords:40 }}</p>
+
+                <a href="{% url 'post_detail' post.pk %}" class="btn btn-sm btn-outline-primary">Read More &rarr;</a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-info py-4 text-center">
+            No posts available yet. Be the first to write one!
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

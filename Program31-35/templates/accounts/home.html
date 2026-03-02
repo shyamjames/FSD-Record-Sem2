@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="p-5 mb-4 bg-light rounded-3 shadow-sm border">
+            <div class="container-fluid py-2">
+                <h1 class="display-5 fw-bold">Comprehensive System Dashboard</h1>
+                <p class="col-md-8 fs-4 text-muted">
+                    This portal incorporates Programs 31, 32, 33, 34, and 35. You are logged in with the <strong>{{ role
+                        }}</strong> role.
+                </p>
+
+                <hr class="my-4">
+
+                <h4>Session Information (Program 35)</h4>
+                <ul>
+                    <li>Logged in at: <code>{{ login_time }}</code></li>
+                    <li>Session Cookie Expiry: <code>{{ session_expiry }} seconds</code></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Links to other apps (To be implemented) -->
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title">Student Management (Prog 32)</h5>
+                <p class="card-text">CRUD operations protected by role-based authentication.</p>
+                {% if role == 'Admin' or role == 'Teacher' %}
+                <a href="{% url 'sms_student_list' %}" class="btn btn-outline-primary">Manage Students</a>
+                {% else %}
+                <span class="badge bg-secondary">Access Restricted</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title">Feedback System (Prog 33)</h5>
+                <p class="card-text">Submit or view feedback based on your role.</p>
+                {% if role == 'Admin' or role == 'Teacher' %}
+                <a href="{% url 'list_feedback' %}" class="btn btn-outline-success">View Feedback</a>
+                {% else %}
+                <a href="{% url 'submit_feedback' %}" class="btn btn-outline-success">Submit Feedback</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title">Blog Application (Prog 34)</h5>
+                <p class="card-text">Read or write blog posts.</p>
+                <a href="{% url 'post_list' %}" class="btn btn-outline-info">Go to Blog</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

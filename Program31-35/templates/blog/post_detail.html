@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - Program 34{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-5">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'post_list' %}" class="text-decoration-none">Blog
+                                Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Post Details</li>
+                    </ol>
+                </nav>
+
+                <h1 class="mb-3 display-5">{{ post.title }}</h1>
+                <div class="text-muted mb-4 pb-3 border-bottom d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="me-3"><i class="bi bi-person"></i> {{ post.author.username }}</span>
+                        <span><i class="bi bi-calendar3"></i> {{ post.created_date|date:"F d, Y" }}</span>
+                    </div>
+                    {% if user == post.author or user.is_admin %}
+                    <div>
+                        <a href="{% url 'post_update' post.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a href="{% url 'post_delete' post.pk %}" class="btn btn-sm btn-outline-danger ms-1">Delete</a>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="post-content" style="font-size: 1.1rem; line-height: 1.8;">
+                    {{ post.content|linebreaks }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
