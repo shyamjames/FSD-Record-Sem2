@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Login - Employee Directory{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">Secure Login</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-dark btn-lg">Login</button>
+                    </div>
+                </form>
+                <div class="mt-3 text-center">
+                    Need an account? <a href="{% url 'register' %}">Register securely</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
