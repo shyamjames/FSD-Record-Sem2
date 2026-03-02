@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">Hi, I'm <span class="highlight">Shyam James</span>.</h1>
+        <p class="hero-subtitle">MCA Student & Developer | Django, Linux & AI Enthusiast.</p>
+        <div class="hero-cta">
+            <a href="{{ url_for('projects') }}" class="btn btn-primary">View My Work</a>
+            <a href="{{ url_for('contact') }}" class="btn btn-secondary">Get in Touch</a>
+        </div>
+        <div class="hero-links">
+            <a href="https://github.com/shyamjames" target="_blank" class="hero-link">
+                <span class="link-icon">🔗</span> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/shyamjames74/" target="_blank" class="hero-link">
+                <span class="link-icon">💼</span> LinkedIn
+            </a>
+            <a href="/static/resume.pdf" download class="hero-link">
+                <span class="link-icon">📄</span> Download Resume
+            </a>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <img src="{{ url_for('static', filename='images/3d_image_me.png') }}" alt="Shyam James 3D"
+            class="hero-3d-image">
+    </div>
+</section>
+
+<section class="featured-work">
+    <h2 class="section-title">Featured Work</h2>
+    <div class="projects-preview">
+        <p>Check out some of my latest projects on the <a href="{{ url_for('projects') }}">Projects page</a>.</p>
+    </div>
+</section>
+{% endblock %}

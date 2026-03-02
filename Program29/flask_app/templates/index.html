@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silvia.AI</title>
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Poppins:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded" rel="stylesheet">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        :root {
+            --glass-bg: rgba(20, 20, 30, 0.6);
+            --glass-border: rgba(0, 255, 255, 0.2);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --text-color: #ffffff;
+            --primary-color: #00ffff;
+            /* Cyan */
+            --secondary-color: #ff00ff;
+            /* Magenta */
+            --accent-color: #ffff00;
+            /* Lightning Yellow */
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #000000;
+            /* Pitch black to match logo */
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            /* Subtle gradients only */
+            background-image:
+                radial-gradient(circle at 50% 50%, rgba(20, 20, 30, 1) 0%, #000000 100%);
+        }
+
+        /* Lightning Bolt Animation - Adjusted for black theme */
+        .lightning {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 10px var(--primary-color);
+            opacity: 0;
+            z-index: -1;
+            animation: flash 5s infinite;
+        }
+
+        @keyframes flash {
+
+            0%,
+            90% {
+                opacity: 0;
+            }
+
+            92% {
+                opacity: 0.5;
+                height: 100%;
+            }
+
+            93% {
+                opacity: 0;
+            }
+
+            94% {
+                opacity: 0.3;
+            }
+
+            96% {
+                opacity: 0;
+            }
+        }
+
+        /* Main Glass Container - Darker for blending */
+        .glass-container {
+            width: 90%;
+            max-width: 1000px;
+            height: 90vh;
+            background: rgba(0, 0, 0, 0.6);
+            /* Darker background */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Header */
+        .header {
+            padding: 15px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            height: 60px;
+            /* Slightly larger */
+            mix-blend-mode: screen;
+            /* Blends black background into transparency */
+            filter: drop-shadow(0 0 2px var(--primary-color));
+        }
+
+        .header h1 {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            font-style: italic;
+            color: #ffffff;
+            /* Whitish color */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Chat Area */
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message {
+            max-width: 75%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            position: relative;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.2), rgba(0, 100, 255, 0.2));
+            border: 1px solid var(--primary-color);
+            border-bottom-right-radius: 4px;
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+        }
+
+        .message.ai {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom-left-radius: 4px;
+            color: #e0e0e0;
+        }
+
+        /* Input Area */
+        .input-area {
+            padding: 20px 30px;
+            background: rgba(0, 0, 0, 0.4);
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .glass-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 12px 20px;
+            color: var(--primary-color);
+            font-family: 'Orbitron', sans-serif;
+            /* Tech font for input */
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .glass-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .action-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .action-btn.send {
+            background: linear-gradient(135deg, var(--primary-color), #0088ff);
+            color: black;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+        }
+
+        .action-btn.send:hover {
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        /* Markdown */
+        .message.ai pre {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        .message.ai code {
+            font-family: monospace;
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lightning"></div>
+
+    <div class="glass-container">
+        <header class="header">
+            <div class="logo-area">
+                <h1>Silvia.AI</h1>
+            </div>
+            <form action="/clear" method="POST" id="clearForm">
+                <button type="button" class="action-btn" onclick="confirmClear()" title="Clear History">
+                    <span class="material-symbols-rounded">delete</span>
+                </button>
+            </form>
+        </header>
+
+        <div class="chat-area" id="chat-container">
+            {% if not history %}
+            <div style="text-align: center; margin-top: 50px; opacity: 0.7;">
+                <p style="font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">SYSTEM ONLINE. AWAITING INPUT.</p>
+            </div>
+            {% endif %}
+
+            {% for msg in history %}
+            <div class="message {{ msg.role }}">
+                {% if msg.role == 'ai' %}
+                {{ msg.content | safe }}
+                {% else %}
+                {{ msg.content }}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="input-area">
+            <form method="POST" style="display: flex; gap: 15px; width: 100%; align-items: center;">
+                <input type="text" name="user_input" class="glass-input" placeholder="Enter command..." required
+                    autocomplete="off">
+
+                <button type="submit" name="action" value="ask" class="action-btn send" title="Execute">
+                    <span class="material-symbols-rounded">bolt</span>
+                </button>
+
+                <button type="submit" name="action" value="summarize" class="action-btn" title="Summarize">
+                    <span class="material-symbols-rounded">summarize</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Auto-scroll
+        const container = document.getElementById('chat-container');
+        container.scrollTop = container.scrollHeight;
+
+        // SweetAlert for Clear History
+        function confirmClear() {
+            Swal.fire({
+                title: 'PURGE MEMORY?',
+                text: "This action cannot be undone.",
+                icon: 'warning',
+                background: '#0a0a0a',
+                color: '#00ffff',
+                showCancelButton: true,
+                confirmButtonColor: '#ff00ff',
+                cancelButtonColor: '#333',
+                confirmButtonText: 'EXECUTE PURGE',
+                cancelButtonText: 'ABORT'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('clearForm').submit();
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

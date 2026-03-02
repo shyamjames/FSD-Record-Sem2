@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: ai_web_helper
+Version: 0.1.0
+Summary: A helper library for AI web applications
+Author: AI Assistant
+Description-Content-Type: text/markdown
+Requires-Dist: google-generativeai
+Requires-Dist: markdown
+Requires-Dist: flask
+Requires-Dist: python-dotenv
+Dynamic: author
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: requires-dist
+Dynamic: summary
+
+A helper library for AI web applications
