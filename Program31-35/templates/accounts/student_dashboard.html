@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Dashboard - Program 31-35{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">Student Dashboard</h1>
+            
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Welcome, {{ user.first_name|default:user.username }}</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Role:</strong> {{ user.role }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Login Time:</strong> {{ login_time }}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">My Profile</h5>
+                            <p class="card-text">View and edit your profile information</p>
+                            <a href="#" class="btn btn-dark">Go to Profile</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">My Courses</h5>
+                            <p class="card-text">View enrolled courses and materials</p>
+                            <a href="#" class="btn btn-dark">View Courses</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Read Blog</h5>
+                            <p class="card-text">Browse articles and blog posts</p>
+                            <a href="#" class="btn btn-dark">Read Posts</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Send Feedback</h5>
+                            <p class="card-text">Share your feedback and suggestions</p>
+                            <a href="#" class="btn btn-dark">Send Feedback</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm border-primary">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Session Management</h5>
+                            <p class="card-text">View and manage session variables (Program 35)</p>
+                            <a href="{% url 'session_management' %}" class="btn btn-primary">Manage Sessions</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Output</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .output {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .message {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .url-bar {
+            background-color: #333;
+            color: white;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-family: monospace;
+        }
+        .links {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+        .links a {
+            display: inline-block;
+            margin: 5px 10px 5px 0;
+            padding: 8px 15px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .links a:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="output">
+        <h2>Output</h2>
+        <div class="url-bar">{{ request.build_absolute_uri }}</div>
+        <div class="message">{{ message }}</div>
+        
+        <div class="links">
+            <strong>Test Session Operations:</strong><br><br>
+            <a href="{% url 'session_set' %}">Set Session</a>
+            <a href="{% url 'session_get' %}">Get Session</a>
+            <a href="{% url 'session_delete' %}">Delete Session</a>
+            <a href="{% url 'session_management' %}">Full Session Manager</a>
+        </div>
+    </div>
+</body>
+</html>

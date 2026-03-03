@@ -4,12 +4,22 @@ from django.core.exceptions import ValidationError
 from .models import Employee
 
 class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Strong Password'}), min_length=8)
-    password_confirm = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}), label="Confirm Password")
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Strong Password', 'class': 'form-control'}), 
+        min_length=8
+    )
+    password_confirm = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password', 'class': 'form-control'}), 
+        label="Confirm Password"
+    )
 
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+        }
 
     def clean(self):
         cleaned_data = super().clean()
@@ -29,6 +39,12 @@ class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employee
         fields = ['name', 'email', 'department', 'salary']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'department': forms.TextInput(attrs={'class': 'form-control'}),
+            'salary': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
 
     def clean_salary(self):
         salary = self.cleaned_data.get('salary')

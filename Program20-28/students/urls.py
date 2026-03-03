@@ -6,6 +6,7 @@ urlpatterns = [
     # Auth Views
     path('login/', auth_views.LoginView.as_view(template_name='students/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('hello/', views.hello_world, name='hello_world'),
 
     # Function-based views for List and Detail
     path('', views.student_list, name='student_list'),

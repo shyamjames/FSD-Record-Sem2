@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block title %}Session Management - Program 35{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Session Management (Program 35)</h1>
+    
+    <!-- Session Information Card -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Current Session Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Session Key:</strong> <code>{{ session_key }}</code></p>
+                    <p><strong>User:</strong> {{ user.username }}</p>
+                    <p><strong>Login Time:</strong> {{ login_time }}</p>
+                    <p><strong>User Role:</strong> {{ user_role }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Session Expiry Age:</strong> {{ expiry_age }} seconds</p>
+                    <p><strong>Session Expiry Date:</strong> {{ expiry_date }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- All Session Variables -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">All Session Variables</h5>
+        </div>
+        <div class="card-body">
+            {% if session_data %}
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Key</th>
+                            <th>Value</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for key, value in session_data.items %}
+                        <tr>
+                            <td><code>{{ key }}</code></td>
+                            <td>{{ value }}</td>
+                            <td>
+                                {% if key not in '_auth_user_id,_auth_user_backend,_auth_user_hash' %}
+                                <form method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="key" value="{{ key }}">
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                                {% else %}
+                                <span class="badge bg-secondary">System Variable</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-muted">No session variables found.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Add Session Variable -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Add Session Variable</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="add">
+                        
+                        <div class="mb-3">
+                            <label for="key" class="form-label">Key</label>
+                            <input type="text" class="form-control" id="key" name="key" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="value" class="form-label">Value</label>
+                            <input type="text" class="form-control" id="value" name="value" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Add Variable</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Session Management Actions -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Session Actions</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Update Session Expiry -->
+                    <form method="post" class="mb-3">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="update_expiry">
+                        <div class="mb-2">
+                            <label for="expiry_seconds" class="form-label">Set Expiry (seconds)</label>
+                            <input type="number" class="form-control" id="expiry_seconds" name="expiry_seconds" placeholder="3600" required>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-sm">Update Expiry</button>
+                    </form>
+
+                    <hr>
+
+                    <!-- Clear Custom Session Variables -->
+                    <form method="post" class="mb-3">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="clear_custom">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Clear all custom session variables?')">
+                            Clear Custom Variables
+                        </button>
+                    </form>
+
+                    <hr>
+
+                    <!-- Logout (Clears Session) -->
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-dark btn-sm" onclick="return confirm('Logout and clear all session data?')">
+                            Logout (Clear All)
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Session Operations Documentation -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Session Operations (CRUD)</h5>
+        </div>
+        <div class="card-body">
+            <h6>1. Create/Set Session Variables</h6>
+            <p><code>request.session['key'] = 'value'</code></p>
+            
+            <h6>2. Read Session Variables</h6>
+            <p><code>value = request.session.get('key', 'default')</code></p>
+            
+            <h6>3. Update Session Variables</h6>
+            <p><code>request.session['key'] = 'new_value'</code><br>
+            <code>request.session.modified = True</code></p>
+            
+            <h6>4. Delete Session Variables</h6>
+            <p><code>del request.session['key']</code></p>
+            
+            <h6>5. Session Expiry Management</h6>
+            <p><code>request.session.set_expiry(seconds)</code></p>
+            
+            <h6>6. Clear All Session Data</h6>
+            <p><code>request.session.flush()</code> or <code>logout(request)</code></p>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

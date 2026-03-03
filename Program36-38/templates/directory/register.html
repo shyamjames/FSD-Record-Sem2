@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
 
 {% block title %}Register - Employee Directory{% endblock %}
 
@@ -14,7 +13,18 @@
                 <p class="text-muted small">Passwords are securely hashed before being stored in the database.</p>
                 <form method="post" novalidate>
                     {% csrf_token %}
-                    {{ form|crispy }}
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="text-danger small">{{ field.errors }}</div>
+                        {% endif %}
+                        {% if field.help_text %}
+                        <div class="form-text">{{ field.help_text }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
                     <div class="d-grid mt-4">
                         <button type="submit" class="btn btn-primary btn-lg">Create Secure Account</button>
                     </div>

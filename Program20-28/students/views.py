@@ -10,6 +10,9 @@ from .forms import StudentForm
 def home(request):
     return render(request, 'students/home.html')
 
+def hello_world(request):
+    return render(request, 'hello_world.html')
+
 # --- Function-Based Views (Program 24) ---
 
 @login_required
